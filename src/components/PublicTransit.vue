@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2>T-bane</h2>
     <div>
       <p>Mot sentrum:</p>
       <p>{{ getDeparturesFromPlatform(departures, "1").length > 0 ? getDeparturesFromPlatform(departures, "1")[0].lineCode + ' - ' + getDeparturesFromPlatform(departures, "1")[0].destination + ' (' + getHumanTime(getDeparturesFromPlatform(departures, "1")[0].depature) + ' min)': '' }}</p>

@@ -1,5 +1,5 @@
 <template>
-  <h2>{{ `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}` }}</h2>
+  <h1>{{ `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}` }}</h1>
 </template>
 
 <script>

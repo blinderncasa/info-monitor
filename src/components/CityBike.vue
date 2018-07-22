@@ -34,6 +34,7 @@
                 ).then(response => {
                     this.bikeStations = response.data.data.bikeRentalStationsByBbox;
                     this.sortedBikeStations = this.bikeStations.sort((a, b) => a.name < b.name ? -1 : 1);
+                    console.log(this.bikeStations);
                 }, error => {
                     return error;
                 });

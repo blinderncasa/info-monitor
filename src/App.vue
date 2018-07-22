@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <HelloWorld/>
+    <Clock/>
+    <PublicTransit/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import PublicTransit from './components/PublicTransit.vue'
+import Clock from './components/Clock.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Clock,
+    PublicTransit
   }
 }
 </script>

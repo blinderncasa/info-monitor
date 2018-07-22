@@ -1,6 +1,5 @@
 <template>
-  <div class="hello">
-    <h2>{{ `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}` }}</h2>
+  <div>
     <div>
       <p>Mot sentrum:</p>
       <p>{{ getDeparturesFromPlatform(departures, "1").length > 0 ? getDeparturesFromPlatform(departures, "1")[0].lineCode + ' - ' + getDeparturesFromPlatform(departures, "1")[0].destination + ' (' + getHumanTime(getDeparturesFromPlatform(departures, "1")[0].depature) + ' min)': '' }}</p>
@@ -16,11 +15,10 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'PublicTransit',
   data () {
     return {
       departures: [],
-      now: new Date()
     }
   },
   mounted () {
@@ -29,17 +27,13 @@ export default {
     setInterval(function () {
       this.loadData();
     }.bind(this), 30000);
-
-    setInterval(() => {
-      this.now = new Date()
-    }, 1000);
   },
   methods: {
     loadData() {
       this.$http.get('https://europe-west1-focused-brand-202320.cloudfunctions.net/depatures/NSR:StopPlace:6332').then(response => {
         this.departures = response.body;
       }, error => {
-        console.log(error);
+        return error;
       });
     },
     getDeparturesFromPlatform: (departures, platform) => {

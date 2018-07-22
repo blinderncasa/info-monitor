@@ -3,6 +3,7 @@
     <Clock/>
     <PublicTransit/>
     <CityBike/>
+    <Weather/>
   </div>
 </template>
 
@@ -10,13 +11,15 @@
 import PublicTransit from './components/PublicTransit.vue'
 import Clock from './components/Clock.vue'
 import CityBike from "./components/CityBike";
+import Weather from "./components/Weather";
 
 export default {
   name: 'app',
   components: {
-      CityBike,
+    CityBike,
     Clock,
-    PublicTransit
+    PublicTransit,
+    Weather
   }
 }
 </script>

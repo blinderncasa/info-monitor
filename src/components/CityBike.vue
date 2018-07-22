@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2>Bysykkelstativer</h2>
-        <div v-for="bikeStation in bikeStations">
+        <div v-for="bikeStation in sortedBikeStations">
             <p>{{bikeStation.name + ': ' + bikeStation.bikesAvailable}}</p>
         </div>
     </div>
@@ -13,6 +13,7 @@
         data (){
             return {
                 bikeStations: [],
+                sortedBikeStations: [],
             }
 
         },
@@ -32,7 +33,7 @@
                 '{"query":"\\nquery bikeRentalStationsByBox($minLat:Float, $minLng:Float, $maxLat:Float, $maxLng:Float) {\\n  bikeRentalStationsByBbox(minimumLatitude: $minLat, minimumLongitude: $minLng, maximumLatitude: $maxLat , maximumLongitude: $maxLng) {\\n    id\\n    name\\n    bikesAvailable\\n    spacesAvailable\\n    longitude\\n    latitude\\n  }\\n}","variables":{"minLng":10.709744182933237,"minLat":59.93510039818138,"maxLng":10.727697817066762,"maxLat":59.94409360181862}}'
                 ).then(response => {
                     this.bikeStations = response.data.data.bikeRentalStationsByBbox;
-
+                    this.sortedBikeStations = this.bikeStations.sort((a, b) => a.name < b.name ? -1 : 1);
                 }, error => {
                     return error;
                 });

@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}` }}</h1>
+  <h1>{{ `${now.toTimeString().substring(0, now.toTimeString().indexOf(' '))}` }}</h1>
 </template>
 
 <script>
@@ -15,6 +15,12 @@ export default {
       this.now = new Date()
     }, 1000);
   },
+
+  methods: {
+      getDate() {
+
+      }
+  }
 }
 </script>
 

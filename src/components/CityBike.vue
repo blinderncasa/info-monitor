@@ -1,19 +1,21 @@
 <template>
     <div>
         <h2>Bysykkelstativer</h2>
-        <div v-for="bikeStation in sortedBikeStations">
+        <div v-for="bikeStation in bikeStations" v-bind:key="bikeStation.id">
             <p>{{bikeStation.name + ': ' + bikeStation.bikesAvailable}}</p>
         </div>
     </div>
 </template>
 
 <script>
+    import Vue from 'vue'
+
     export default {
         name: "CityBike",
         data (){
             return {
+                stationIds: ["184", "304", "305", "308", "309"],
                 bikeStations: [],
-                sortedBikeStations: [],
             }
 
         },
@@ -23,21 +25,29 @@
 
 
             setInterval(function () {
+
                 this.loadData();
             }.bind(this), 30000);
         },
 
         methods: {
             loadData(){
-                this.$http.post('https://api.entur.org/journeyplanner/2.0/index/graphql',
-                '{"query":"\\nquery bikeRentalStationsByBox($minLat:Float, $minLng:Float, $maxLat:Float, $maxLng:Float) {\\n  bikeRentalStationsByBbox(minimumLatitude: $minLat, minimumLongitude: $minLng, maximumLatitude: $maxLat , maximumLongitude: $maxLng) {\\n    id\\n    name\\n    bikesAvailable\\n    spacesAvailable\\n    longitude\\n    latitude\\n  }\\n}","variables":{"minLng":10.709744182933237,"minLat":59.93510039818138,"maxLng":10.727697817066762,"maxLat":59.94409360181862}}'
-                ).then(response => {
-                    this.bikeStations = response.data.data.bikeRentalStationsByBbox;
-                    this.sortedBikeStations = this.bikeStations.sort((a, b) => a.name < b.name ? -1 : 1);
-                    console.log(this.bikeStations);
-                }, error => {
-                    return error;
-                });
+                function bikeRequest(stationIds){
+                    return Promise.all(stationIds.map(function (stationId) {
+                        return Vue.http.post('https://api.entur.org/journeyplanner/2.0/index/graphql', '{"query":"{\\n  bikeRentalStation(id: \\"' + stationId + '\\") {\\n    name\\n    id\\n    realtimeOccupancyAvailable\\n    bikesAvailable\\n    spacesAvailable\\n  }\\n}\\n","variables":null,"operationName":null}\n')
+                    }))
+                }
+
+                function sortBikes(bikeStations){
+                    let tmpStations = [];
+                    for (let i = 0; i < bikeStations.length ; i++) {
+                        tmpStations[i] = bikeStations[i].body.data.bikeRentalStation;
+                    }
+                    this.bikeStations = tmpStations.sort(((a, b) => a.bikesAvailable < b.bikesAvailable ? 1 : -1))
+                }
+
+                bikeRequest(this.stationIds).then(sortBikes.bind(this));
+
             }
         }
 

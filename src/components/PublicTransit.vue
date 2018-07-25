@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="white-box">
     <h2>T-bane</h2>
     <div>
       <p>Mot sentrum:</p>

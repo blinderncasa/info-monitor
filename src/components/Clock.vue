@@ -1,5 +1,7 @@
 <template>
-  <h1>{{ `${now.toTimeString().substring(0, now.toTimeString().indexOf(' '))}` }}</h1>
+  <div class="clock">
+    <h1>{{ `${now.toTimeString().substring(0, now.toTimeString().indexOf(' ')-3)}` }}</h1>
+  </div>
 </template>
 
 <script>
@@ -26,5 +28,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  h1{
+    margin-top: 0;
+    color: white;
+    font-size: 64px;
+  }
+  .clock{
 
+  }
 </style>

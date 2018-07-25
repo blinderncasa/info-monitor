@@ -1,9 +1,12 @@
 <template>
   <div id="app">
-    <Clock/>
+    <div class="clock-weather-wrapper">
+      <Clock/>
+      <Weather/>
+    </div>
     <PublicTransit/>
     <CityBike/>
-    <Weather/>
+
   </div>
 </template>
 
@@ -25,12 +28,31 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  @import url('https://fonts.googleapis.com/css?family=Muli');
+
+  body{
+    padding: 0;
+    margin: 0;
+    font-family: 'Muli', sans-serif;
+  }
+  #app {
+    background-image: url("assets/bg.jpg");
+    background-size: cover;
+    height: 100vh;
+    background-position: bottom;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .clock-weather-wrapper{
+    width: 80vw;
+    display: flex;
+  }
+  .white-box{
+    width: 80vw;
+    background-color: white;
+    margin-bottom: 50px;
+    padding: 50px;
+  }
 </style>

@@ -1,8 +1,7 @@
 <template>
-    <div>
-        <h2>Været</h2>
-        <div v-for="(forcast, index) in weather" v-bind:key="index">
-            {{ (new Date(forcast.from)).getHours() + ':00 - ' + (new Date(forcast.to)).getHours() + ':00 ' + forcast.location.minTemperature.value + ' - ' + forcast.location.maxTemperature.value }}
+    <div class="weather">
+        <div v-for="(forcast, index) in weather" v-bind:key="index"> <!-- forcast.location.symbol.id -->
+            {{ (new Date(forcast.from)).getHours() + ':00 - ' + (new Date(forcast.to)).getHours() + ':00 ' + parseInt(((parseInt(forcast.location.minTemperature.value) + parseInt(forcast.location.maxTemperature.value)) / 2) + 0.5) }}
         </div>
     </div>
 </template>
@@ -42,5 +41,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+    .weather{
+         
+    }
 </style>

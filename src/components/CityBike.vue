@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="white-box">
         <h2>Bysykkelstativer</h2>
         <div v-for="bikeStation in bikeStations" v-bind:key="bikeStation.id">
             <p>{{bikeStation.name + ': ' + bikeStation.bikesAvailable}}</p>

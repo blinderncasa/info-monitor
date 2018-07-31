@@ -66,9 +66,8 @@
       this.loadData();
 
       setInterval(function () {
-        console.log(this.weather[0].location.symbol.number);
         this.loadData();
-      }.bind(this), 30000);
+      }.bind(this), 15 * 60000);
     },
     methods: {
       loadData() {

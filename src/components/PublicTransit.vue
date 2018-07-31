@@ -6,8 +6,7 @@
         <span>Vestli, Bergkrystallen, Ringen</span>
       </div>
       <div class="departures">
-        <div class="single">{{ getDeparturesFromPlatform(departures, "1").length > 0 ? getHumanTime(getDeparturesFromPlatform(departures, "1")[0].depature) + ' min': '' }}</div>
-        <div class="single">{{ getDeparturesFromPlatform(departures, "1").length > 1 ? getHumanTime(getDeparturesFromPlatform(departures, "1")[1].depature) + ' min': '' }}</div>
+        <div v-for="depature in getDeparturesFromPlatform(departures, '1')" class="single" v-bind:class="{ blue: depature.lineCode === 4  || depature.destination === 'Ringen via Majorstuen' }">{{ getHumanTime(depature.depature) + ' min' }}</div>
       </div>
     </div>
     <div class="one-way">
@@ -16,8 +15,7 @@
         <span>Sognsvann, Ringen, Vestli</span>
       </div>
       <div class="departures">
-        <div class="single">{{ getDeparturesFromPlatform(departures, "2").length > 0 ? getHumanTime(getDeparturesFromPlatform(departures, "2")[0].depature) + ' min': '' }}</div>
-        <div class="single">{{ getDeparturesFromPlatform(departures, "2").length > 1 ? getHumanTime(getDeparturesFromPlatform(departures, "2")[1].depature) + ' min': '' }}</div>
+        <div v-for="depature in getDeparturesFromPlatform(departures, '2')" class="single" v-bind:class="{ blue: depature.lineCode === 4 }">{{ getHumanTime(depature.depature) + ' min' }}</div>
       </div>
     </div>
   </div>
@@ -46,10 +44,10 @@ export default {
         return error;
       });
     },
-    getDeparturesFromPlatform: (departures, platform) => {
+    getDeparturesFromPlatform(departures, platform) {
       return departures.filter((departure) => {
-        return departure.platform === platform;
-      })
+        return departure.platform === platform && this.getHumanTime(departure.depature) !== 0;
+      }).slice(0, 2)
     },
     getHumanTime: (time) => {
       return Math.round((Date.parse(time) - Date.now())/(60*1000))
@@ -86,6 +84,12 @@ export default {
     width: 100px;
     text-align: center;
   }
+
+  .one-way .blue {
+    color: blue !important;
+    border-color: blue !important;
+  }
+
   .one-way span{
     text-transform: uppercase;
     color: #BABABA;

@@ -32,12 +32,6 @@ export default {
       this.now = new Date()
     }, 1000);
   },
-
-  methods: {
-      getDate() {
-
-      }
-  }
 }
 </script>
 

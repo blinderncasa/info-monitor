@@ -6,7 +6,8 @@
     </div>
     <PublicTransit/>
     <CityBike/>
-
+    <NRK/>
+    <OBX/>
   </div>
 </template>
 
@@ -15,6 +16,8 @@ import PublicTransit from './components/PublicTransit.vue'
 import Clock from './components/Clock.vue'
 import CityBike from "./components/CityBike";
 import Weather from "./components/Weather";
+import NRK from "./components/NRK";
+import OBX from "./components/OBX";
 
 export default {
   name: 'app',
@@ -22,7 +25,9 @@ export default {
     CityBike,
     Clock,
     PublicTransit,
-    Weather
+    Weather,
+    NRK,
+    OBX,
   }
 }
 </script>

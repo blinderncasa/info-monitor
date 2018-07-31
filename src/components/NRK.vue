@@ -30,7 +30,7 @@
 
       setInterval(() => {
         this.now = new Date()
-      }, 10000);
+      }, 30000);
     },
     methods: {
       getData() {

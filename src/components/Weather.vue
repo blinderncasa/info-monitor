@@ -1,7 +1,13 @@
 <template>
     <div class="weather">
-        <div v-for="(forcast, index) in weather" v-bind:key="index"> <!-- forcast.location.symbol.id -->
-            {{ (new Date(forcast.from)).getHours() + ':00 - ' + (new Date(forcast.to)).getHours() + ':00 ' + parseInt(((parseInt(forcast.location.minTemperature.value) + parseInt(forcast.location.maxTemperature.value)) / 2) + 0.5) }}
+        <div class="single-weather" v-for="(forcast, index) in weather" v-bind:key="index"> <!-- forcast.location.symbol.id -->
+            <img class="icon" src="../assets/weather/regn.svg" alt="regn" />
+            <span class="temp">
+                {{ parseInt(((parseInt(forcast.location.minTemperature.value) + parseInt(forcast.location.maxTemperature.value)) / 2) + 0.5) }}
+            </span>
+            <span class="time">
+                {{ getHumanTime(new Date(forcast.from)) + ' - ' + getHumanTime(new Date(forcast.to)) }}
+            </span>
         </div>
     </div>
 </template>
@@ -33,7 +39,10 @@
         });
       },
       getHumanTime: (time) => {
-        return Math.round((Date.parse(time) - Date.now())/(60*1000))
+        if(time.getHours() < 10) {
+            return '0' + time.getHours();
+        }
+        return time.getHours();
       },
     }
   }
@@ -42,6 +51,28 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     .weather{
-         
+        color: white;
+        display: flex;
+    }
+    .weather .icon{
+        width: 84px;
+        padding-bottom: 10px;
+    }
+    .single-weather{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+    }
+    .single-weather .temp{
+        font-size: 44px;
+    }
+    .single-weather .temp:after{
+        content: '°';
+        margin-left: -7px;
+    }
+    .single-weather .time{
+        color: rgba(255,255,255,0.36);
+        font-weight: 300;
     }
 </style>

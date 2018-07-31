@@ -48,6 +48,7 @@ export default {
   .clock-weather-wrapper{
     width: 80vw;
     display: flex;
+    justify-content: space-between;
   }
   .white-box{
     width: 80vw;

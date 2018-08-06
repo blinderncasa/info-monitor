@@ -1,14 +1,14 @@
 <template>
     <div class="white-box">
-        <div v-if="data[0]">
-            <div>{{ data[0].title }}</div>
-            <div>{{ getHourMinute(data[0].pubDate) }}</div>
-            <div>{{ data[0].content }}</div>
+        <div v-if="data[0]" class="main">
+            <h3>{{ data[0].title }}</h3>
+            <div class="date">{{ getHumanTime(new Date(data[0].pubDate)) }}</div>
+            <p>{{ data[0].content }}</p>
         </div>
-        <div>
+        <div class="list">
             <div v-for="news in data.slice(1, 4)">
-                <div>{{ news.title }}</div>
-                <div>{{ getHourMinute(news.pubDate) }}</div>
+                <h3>{{ news.title }}</h3>
+                <div class="date">{{ getHumanTime(new Date(news.pubDate)) }}</div>
             </div>
         </div>
     </div>
@@ -38,27 +38,38 @@
           this.data = feed.items;
         });
       },
-      getHourMinute(dateString) {
-        let date = new Date(dateString);
-        let hour = date.getHours();
-        if(hour < 10) {
-          hour = '0' + hour;
-        }
-
-        let minute = date.getMinutes();
-        if(minute < 10) {
-          minute = '0' + minute;
-        }
-
-        return hour + ':' + minute;
-      },
+        getHumanTime: (time) => {
+        let hours = time.getHours();
+  if(hours < 10) {
+      hours = '0' + hours;
+  }
+  let minutes = time.getMinutes();
+  if(minutes < 10) {
+      minutes = '0' + minutes;
+  }
+  return hours + ':' + minutes;
+  },
     }
   }
 </script>
 
 <style scoped>
-.white-box {
-    display: flex;
-    justify-content: center;
-}
+    .white-box {
+        display: flex;
+        justify-content: space-between;
+    }
+    .main{
+        width: 50%;
+    }
+    h3{
+        font-size: 23px;
+        margin-bottom: 8px;
+    }
+    .date{
+        color: gray;
+    }
+    p{
+        font-size: 18px;
+        margin-top: 8px;
+    }
 </style>

@@ -1,9 +1,22 @@
 <template>
-  <div v-if="data">
-    <div>{{ data.CHANGE_PCT.toFixed(2) }}</div>
-    <div>{{ data.CHANGE_7DAYS_PCT.toFixed(2) }}</div>
-    <div>{{ data.CHANGE_1MONTH_PCT.toFixed(2) }}</div>
-  </div>
+  <div class="obx" v-if="data">
+    <div>
+      <div class="single-info">
+        <span class="desc">Siste dag</span>
+        <span class="percent">{{ data.CHANGE_PCT.toFixed(2) }}</span>
+      </div>
+      <div class="single-info">
+        <span class="desc">Siste uke</span>
+        <span class="percent">{{ data.CHANGE_7DAYS_PCT.toFixed(2) }}</span>
+      </div>
+      <div class="single-info">
+        <span class="desc">Siste måned</span>
+        <span class="percent">{{ data.CHANGE_1MONTH_PCT.toFixed(2) }}</span>
+      </div>
+    </div>
+  <span class="absolute-percent">%</span>
+  <span class="obx-title">OBX</span>
+</div>
 </template>
 
 <script>
@@ -36,5 +49,38 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  .obx{
+    display: flex;
+    align-items: center;
+  }
+  .single-info{
+    color: white;
+    height: 50px;
+  }
+  .desc{
+    text-transform: uppercase;
+    font-size: 18px;
+    color: lightgray;
+    font-weight: 300;
+    min-width: 150px;
+    display: inline-block;
+    text-align: right;
+  }
+  .percent{
+    font-size: 28px;
+    color: white;
+    margin-left: 70px;
+    vertical-align: middle;
+  }
+  .absolute-percent{
+    position: relative;
+    font-size: 140px;
+    color: white;
+    margin-left: 40px;
+  }
+  .obx-title{
+    font-size: 58px;
+    color: white;
+    margin-left: 40px;
+  }
 </style>

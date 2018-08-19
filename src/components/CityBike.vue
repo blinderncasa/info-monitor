@@ -14,7 +14,7 @@
         name: "CityBike",
         data (){
             return {
-                stationIds: ["184", "304", "305", "308", "309"],
+                stationIds: [ "308", "304", "305", "184", "309"],
                 bikeStations: [],
             }
 
@@ -40,10 +40,32 @@
 
                 function sortBikes(bikeStations){
                     let tmpStations = [];
+                    let sortedStations = [];
+
                     for (let i = 0; i < bikeStations.length ; i++) {
                         tmpStations[i] = bikeStations[i].body.data.bikeRentalStation;
                     }
-                    this.bikeStations = tmpStations.sort(((a, b) => a.bikesAvailable < b.bikesAvailable ? 1 : -1))
+
+                    sortedStations = tmpStations.sort(((a, b) => a.bikesAvailable < b.bikesAvailable ? 1 : -1));
+
+                    if(tmpStations[0].bikesAvailable === 0 && tmpStations[1].bikesAvailable === 0 ){
+                        this.bikeStations = sortedStations;
+                        return;
+                    }
+
+                    if(tmpStations[0].bikesAvailable === 0){
+                        var tmp = tmpStations[0];
+                        tmpStations[0] = sortedStations[0];
+                    }
+                    if(tmpStations[1].bikesAvailable === 0){
+                        var tmp = tmpStations[1];
+                        tmpStations[1] = sortedStations[0];
+                    }
+
+                    this.bikeStations = tmpStations;
+
+
+
                 }
 
                 bikeRequest(this.stationIds).then(sortBikes.bind(this));

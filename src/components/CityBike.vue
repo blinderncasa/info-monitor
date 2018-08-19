@@ -2,7 +2,7 @@
     <div class="white-box">
         <h2>Bysykkelstativer</h2>
         <div v-for="bikeStation in bikeStations" v-bind:key="bikeStation.id">
-            <p>{{bikeStation.name + ': ' + bikeStation.bikesAvailable}}</p>
+            <p>{{bikeStation.name +  ' - ' + bikeStation.description + ' : ' + bikeStation.bikesAvailable}}</p>
         </div>
     </div>
 </template>
@@ -34,7 +34,7 @@
             loadData(){
                 function bikeRequest(stationIds){
                     return Promise.all(stationIds.map(function (stationId) {
-                        return Vue.http.post('https://api.entur.org/journeyplanner/2.0/index/graphql', '{"query":"{\\n  bikeRentalStation(id: \\"' + stationId + '\\") {\\n    name\\n    id\\n    realtimeOccupancyAvailable\\n    bikesAvailable\\n    spacesAvailable\\n  }\\n}\\n","variables":null,"operationName":null}\n')
+                        return Vue.http.post('https://api.entur.org/journeyplanner/2.0/index/graphql', '{"query":"{\\n  bikeRentalStation(id: \\"' + stationId + '\\") {\\n    name\\n    id\\n    realtimeOccupancyAvailable\\n    bikesAvailable\\n description\\n    spacesAvailable\\n  }\\n}\\n","variables":null,"operationName":null}\n')
                     }))
                 }
 

@@ -1,8 +1,10 @@
 <template>
     <div class="white-box">
-        <div v-for="bikeStation in bikeStations" v-bind:key="bikeStation.id">
+
+        <div v-for="bikeStation in bikeStations">
             <div class="single"><div class="text">{{bikeStation.name }}<p>{{ bikeStation.description }}</p></div>  <span><img src="../assets/bicycle.svg" alt="" />{{ bikeStation.bikesAvailable}} </span></div>
         </div>
+
     </div>
 </template>
 
@@ -36,6 +38,7 @@
                     }))
                 }
                 function sortBikes(bikeStations){
+                    this.bikeStations = [];
                     let tmpStations = [];
                     let sortedStations = [];
 
@@ -43,7 +46,9 @@
                         tmpStations[i] = bikeStations[i].body.data.bikeRentalStation;
                     }
 
-                    sortedStations = tmpStations.sort(((a, b) => a.bikesAvailable < b.bikesAvailable ? 1 : -1));
+                    sortedStations = tmpStations;
+
+                    sortedStations = sortedStations.sort(((a, b) => a.bikesAvailable < b.bikesAvailable ? 1 : -1));
 
                     if(tmpStations[0].bikesAvailable === 0 && tmpStations[1].bikesAvailable === 0 ){
                         this.bikeStations = sortedStations;
@@ -56,10 +61,16 @@
                     }
                     if(tmpStations[1].bikesAvailable === 0){
                         var tmp = tmpStations[1];
-                        tmpStations[1] = sortedStations[0];
-                    }
+                        if(tmpStations[0] === sortedStations[0]){
+                            tmpStations[1] = sortedStations[1];
+                        }
+                        else{
+                            tmpStations[1] = sortedStations[0];
+                        }
 
-                    this.bikeStations = tmpStations;
+                    }
+                    this.bikeStations = tmpStations.slice(0,2);
+
 
 
 

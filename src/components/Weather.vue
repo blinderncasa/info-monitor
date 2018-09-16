@@ -22,6 +22,7 @@
           1: 'sol.svg',
           2: 'sky-sol.svg',
           3: 'sky-sol.svg',
+          4: 'sky.svg',
           15: 'sky.svg',
           6: 'regn-lyn.svg',
           24: 'regn-lyn.svg',

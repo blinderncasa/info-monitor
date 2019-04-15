@@ -6,7 +6,7 @@
         <span>Vestli, Bergkrystallen, Ringen</span>
       </div>
       <div class="departures">
-        <div v-for="departure in getDeparturesFromPlatform(departures, '2')" class="single" v-bind:class="{ blue: parseInt(departure.lineCode) === 4 }">{{ getHumanTime(departure.depature) + ' min' }}</div>
+        <div v-for="departure in getDeparturesFromPlatform(departures, '1')" class="single" v-bind:class="{ blue: parseInt(departure.lineCode) === 4 }">{{ getHumanTime(departure.depature) + ' min' }}</div>
       </div>
     </div>
     <div class="one-way">
@@ -15,7 +15,7 @@
         <span>Sognsvann, Ringen, Vestli</span>
       </div>
       <div class="departures">
-        <div v-for="departure in getDeparturesFromPlatform(departures, '1')" class="single" v-bind:class="{ blue: parseInt(departure.lineCode) === 4  || departure.destination === 'Ringen via Storo' }">{{ getHumanTime(departure.depature) + ' min' }}</div>
+        <div v-for="departure in getDeparturesFromPlatform(departures, '2')" class="single" v-bind:class="{ blue: parseInt(departure.lineCode) === 4  || departure.destination === 'Ringen via Storo' }">{{ getHumanTime(departure.depature) + ' min' }}</div>
       </div>
     </div>
   </div>

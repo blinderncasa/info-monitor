@@ -34,7 +34,7 @@
     },
     methods: {
       getData() {
-        this.parser.parseURL('https://jsonp.afeld.me/?url=https%3A%2F%2Fwww.nrk.no%2Fnyheter%2Fsiste.rss', (err, feed) => {
+        this.parser.parseURL('https://thingproxy.freeboard.io/fetch/https://www.nrk.no/nyheter/siste.rss', (err, feed) => {
           this.data = feed.items;
         });
       },

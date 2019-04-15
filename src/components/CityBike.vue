@@ -2,20 +2,41 @@
     <div class="white-box">
 
         <div v-for="bikeStation in bikeStations" :key="bikeStation.index">
-            <div class="single"><div class="text">{{bikeStation.name }}<p>{{ bikeStation.description }}</p></div>  <span><img src="../assets/bicycle.svg" alt="" />{{ bikeStation.bikesAvailable}} </span></div>
+            <div class="single"><div class="text">{{stationToNameDesc[bikeStation.station_id].name }}<p>{{ stationToNameDesc[bikeStation.station_id].desc }}</p></div>  <span><img src="../assets/bicycle.svg" alt="" />{{ bikeStation.num_bikes_available}} </span></div>
         </div>
 
     </div>
 </template>
 
 <script>
-    import Vue from 'vue'
 
     export default {
         name: "CityBike",
         data (){
             return {
-                stationIds: [ "308", "304", "305", "184", "309"],
+                stationIds: [ "474", "496", "580", "619", "486"],
+                stationToNameDesc: {
+                    "474": {
+                        name: 'Blindern studentparkering',
+                        desc: 'Blindern studentparkering',
+                    },
+                    "496": {
+                        name: 'Fysikkbygningen',
+                        desc: 'Blindern Fysikkbygg'
+                    },
+                    "580": {
+                        name: 'Georg Morgenstiernes hus',
+                        desc: 'Blindern  Moltke Moes vei'
+                    },
+                    "619": {
+                        name: 'Bak Niels Treschows hus nord',
+                        desc: 'Bak Niels Treschows nord'
+                    },
+                    "486": {
+                        name: 'Det Teologiske fakultet',
+                        desc: 'Universitetet i Oslo'
+                    },
+                },
                 bikeStations: [],
             }
         },
@@ -32,52 +53,28 @@
 
         methods: {
             loadData(){
-                function bikeRequest(stationIds){
-                    return Promise.all(stationIds.map(function (stationId) {
-                        return Vue.http.post('https://api.entur.org/journeyplanner/2.0/index/graphql', '{"query":"{\\n  bikeRentalStation(id: \\"' + stationId + '\\") {\\n    name\\n    id\\n    realtimeOccupancyAvailable\\n    bikesAvailable\\n description\\n    spacesAvailable\\n  }\\n}\\n","variables":null,"operationName":null}\n')
-                    }))
-                }
-                function sortBikes(bikeStations){
+                this.$http.get('https://gbfs.urbansharing.com/oslobysykkel.no/station_status.json').then(response => {
                     this.bikeStations = [];
                     let tmpStations = [];
-                    let sortedStations = [];
+                    let tmpStations2 = [];
 
-                    for (let i = 0; i < bikeStations.length ; i++) {
-                        tmpStations[i] = bikeStations[i].body.data.bikeRentalStation;
-
+                    for (let i = 0; i < this.stationIds.length ; i++) {
+                        tmpStations[i] = response.body.data.stations.find((item) => {
+                            return item.station_id === this.stationIds[i];
+                        });
                     }
 
-                    sortedStations = tmpStations;
-
-                    sortedStations = sortedStations.sort(((a, b) => a.bikesAvailable < b.bikesAvailable ? 1 : -1));
-
-                    if(tmpStations[0].bikesAvailable === 0 && tmpStations[1].bikesAvailable === 0 ){
-                        this.bikeStations = sortedStations.slice(0,2);
-                        return;
-                    }
-
-                    if(tmpStations[0].bikesAvailable === 0){
-
-                        tmpStations[0] = sortedStations[0];
-                    }
-                    if(tmpStations[1].bikesAvailable === 0){
-
-                        if(tmpStations[0] === sortedStations[0]){
-                            tmpStations[1] = sortedStations[1];
+                    tmpStations.forEach((item) => {
+                        if(item.num_bikes_available > 0) {
+                            tmpStations2.push(item);
                         }
-                        else{
-                            tmpStations[1] = sortedStations[0];
-                        }
+                    });
 
-                    }
+                    this.bikeStations = tmpStations2.concat(tmpStations).slice(0,2);
 
-                    this.bikeStations = tmpStations.slice(0,2);
-
-
-
-
-                }
-                bikeRequest(this.stationIds).then(sortBikes.bind(this));
+                }, error => {
+                    return error;
+                });
             }
         }
     }

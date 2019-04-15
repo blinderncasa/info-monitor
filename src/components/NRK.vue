@@ -34,9 +34,13 @@
     },
     methods: {
       getData() {
-        this.parser.parseURL('https://thingproxy.freeboard.io/fetch/https://www.nrk.no/nyheter/siste.rss', (err, feed) => {
-          this.data = feed.items;
-        });
+          this.$http.get('https://jsonp.afeld.me/?url=https://www.nrk.no/nyheter/siste.rss').then(response => {
+              this.parser.parseString(response.body, (err, feed) => {
+                  this.data = feed.items;
+              });
+          }, error => {
+              return error;
+          });
       },
         getHumanTime: (time) => {
         let hours = time.getHours();

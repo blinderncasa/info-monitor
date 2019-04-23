@@ -60,7 +60,7 @@ export default {
   .desc{
     text-transform: uppercase;
     font-size: 18px;
-    color: lightgray;
+    color: #fff;
     font-weight: 300;
     min-width: 150px;
     display: inline-block;

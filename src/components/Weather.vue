@@ -116,7 +116,7 @@
         margin-left: -7px;
     }
     .single-weather .time{
-        color: rgba(255,255,255,0.36);
+        color: #fff;
         font-weight: 300;
     }
 </style>

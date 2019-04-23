@@ -41,7 +41,7 @@ export default {
     font-family: 'Muli', sans-serif;
   }
   #app {
-    background-image: url("assets/bg2.jpg");
+    background-image: url("assets/bg3.jpg");
     background-size: cover;
     height: 100vh;
     background-position: bottom;
